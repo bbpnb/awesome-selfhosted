@@ -19,6 +19,9 @@ function parseArgs(args) {
     pr = true;
     diff = fs.readFileSync(args[args.indexOf('-d', 2)+1], 'utf8');
   }
+  if ( pr === true) {
+    console.log(chalk.blue(`Running on PR. README.md: ${args[args.indexOf('-r', 2)+1]} diff: ${args[args.indexOf('-d', 2)+1]}`))
+  }
 }
 
 // Function to find lines with entries
@@ -133,6 +136,7 @@ function entryErrorCheck() {
   let total = 0;
   let failed = [];
   let entries = [];
+  let diffEntries = [];
 
   if (lines[0] === "") {
     console.log(chalk.red("0 Entries Found"))
@@ -150,20 +154,19 @@ function entryErrorCheck() {
   }
 
   if (pr === true) {
-    console.log(diff.length)
-    console.log("Only testing the diff from the PR.")
+    console.log(chalk.cyan("Only testing the diff from the PR."))
     const diffLines = split(diff); // Inserts each line of diff into an array
     for (let l of diffLines) {
       if (entryFilter(l) === true) { // filter out lines that don't start with * [)
       e = {};
       e.raw = l;
-      entries.push(e);
+      diffEntries.push(e);
       } else if (licenseFilter(l) === true) {
         licenses.add(parseLicense(l))
       }
     }
-    total = entries.length
-    for (let e of entries) {
+    total = diffEntries.length
+    for (let e of diffEntries) {
       e.pass = true
       e.name = parseName(e.raw)
       if (!findPattern(e.raw)) {
@@ -183,7 +186,7 @@ function entryErrorCheck() {
       }
    }
   } else {
-    console.log("Testing entire README.md")
+    console.log(chalk.cyan("Testing entire README.md"))
     total = entries.length
     for (let e of entries) {
       e.pass = true
