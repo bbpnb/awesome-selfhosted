@@ -4,11 +4,11 @@ node_js:
   - "node"
 cache:
   npm: false
-  
+
 before_install:
   - rvm install 2.6.2
   - gem install awesome_bot
-  - cd tests && npm install -g colors && cd ..
+  - cd tests && npm install colors && cd ..
 
 before_script:
 
