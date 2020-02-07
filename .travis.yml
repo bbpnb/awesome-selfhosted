@@ -6,7 +6,7 @@ node_js:
 before_install:
   - rvm install 2.6.2
   - gem install awesome_bot
-  - cd tests && npm install
+  - cd tests && npm install && cd ..
 
 before_script:
 
