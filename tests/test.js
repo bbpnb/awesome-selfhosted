@@ -3,7 +3,7 @@
 // node test.js -r README.md -d temp.md  (Checks just the diff)
 
 const fs = require('fs');
-const colors = require('colors/safe');
+let colors = require('colors/safe');
 let licenses = new Set();
 let pr = false;
 let readme;

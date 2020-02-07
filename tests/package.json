@@ -1,0 +1,14 @@
+{
+  "name": "awesome-selfhosted-tests",
+  "version": "0.1.0",
+  "description": "",
+  "main": "test.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "CC-BY-SA-3.0",
+  "dependencies": {
+    "colors": "^1.4.0"
+  }
+}
