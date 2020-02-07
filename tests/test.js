@@ -11,9 +11,7 @@ let diff;
 
 //Parse the command options and set the pr var
 function parseArgs(args) {
-      console.log(args)
   if ( args.indexOf('-r', 2) > 0 ) {
-    console.log(args.indexOf('-r', 2))
     readme = fs.readFileSync(args[args.indexOf('-r', 2)+1], 'utf8')
   }
   if (args.indexOf('-d', 2) > 0) {
