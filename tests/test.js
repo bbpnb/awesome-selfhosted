@@ -149,6 +149,7 @@ function entryErrorCheck() {
   }
 
   if (pr === true) {
+    console.log(diff.length)
     console.log("Only testing the diff from the PR.")
     const diffLines = split(diff); // Inserts each line of diff into an array
     for (let l of diffLines) {
@@ -172,7 +173,7 @@ function entryErrorCheck() {
       e.licenseTest = testLicense(e.raw);
       if (e.licenseTest === false) {
         e.pass = false;
-        console.log(`${e.name}'s license is not on License list.`)
+        console.log(colors.yellow(`${e.name}'s license is not on License list.`))
       }
       if (e.pass) {
         totalPass++
@@ -189,12 +190,12 @@ function entryErrorCheck() {
       if (!findPattern(e.raw)) {
         e.highlight = findError(e.raw);
         e.pass = false;
-        console.log(`${colors.yellow(e.line)}${e.highlight}`)
+        console.log(`${colors.yellow(e.line)} ${e.highlight}`)
       }
       e.licenseTest = testLicense(e.raw);
       if (e.licenseTest === false) {
         e.pass = false;
-        console.log(colors.yellow(`${e.line}${e.name}'s license is not on License list.`))
+        console.log(colors.yellow(`${e.line} ${e.name}'s license is not on License list.`))
       }
       if (e.pass) {
         totalPass++
@@ -204,7 +205,6 @@ function entryErrorCheck() {
    }
   }
 
-  
 
   if (totalFail > 0) {
     console.log(colors.blue(`\n-----------------------------\n`))
