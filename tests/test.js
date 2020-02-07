@@ -3,7 +3,8 @@
 // node test.js -r README.md -d temp.md  (Checks just the diff)
 
 const fs = require('fs');
-let colors = require('colors/safe');
+//let colors = require('colors/safe');
+const chalk = require('chalk');
 let licenses = new Set();
 let pr = false;
 let readme;
@@ -58,9 +59,9 @@ function testMainLink(text) {
   const testA1 = /(- \[.*?\]?\(?.*?\)?)( .*$)/;
     if (testA.test(text) === false) {
     let a1 = testA1.exec(text)[2];
-    return colors.red.underline(text.replace(a1, ''))
+    return chalk.red.underline(text.replace(a1, ''))
   }
-  return colors.green(testA.exec(text)[1])
+  return chalk.green(testA.exec(text)[1])
 }
 
 //Tests  '`⚠` - Short description, less than 250 characters.'
@@ -71,9 +72,9 @@ function testDescription(text) {
   if (testB.test(text) === false) {
     let b1 = testA1.exec(text)[1];
     let b2 = testB2.exec(text)[1];
-    return colors.red.underline(text.replace(b1, '').replace(b2, ''))
+    return chalk.red.underline(text.replace(b1, '').replace(b2, ''))
   } 
-  return colors.green(testB.exec(text)[1])
+  return chalk.green(testB.exec(text)[1])
 }
 
 //If present, tests '([Demo](http://url.to/demo), [Source Code](http://url.of/source/code), [Clients](https://url.to/list/of/related/clients-or-apps))'
@@ -85,9 +86,9 @@ function testSrcDemCli(text) {
   if ((testC > -1) && (testD.test(text) === false)) {
     let d1 = testD1.exec(text)[1];
     let d2 = testD2.exec(text)[1];
-    return colors.red.underline(text.replace(d1+' ', '').replace(d2, ''))
+    return chalk.red.underline(text.replace(d1+' ', '').replace(d2, ''))
 } else if (testC > -1) {
-  return colors.green(testD.exec(text)[1])
+  return chalk.green(testD.exec(text)[1])
 }
 return ""
 }
@@ -99,9 +100,9 @@ function testLangLic(text) {
   const testE1 = /(^[^`]*)/;
   if (testE === false) {
     let e1 = testE1.exec(text)[1];
-    return colors.red.underline(text.replace(e1, ''))
+    return chalk.red.underline(text.replace(e1, ''))
   }
-  return colors.green(testD2.exec(text)[1])
+  return chalk.green(testD2.exec(text)[1])
 }
 
 //Runs all the syntax tests...
@@ -134,7 +135,7 @@ function entryErrorCheck() {
   let entries = [];
 
   if (lines[0] === "") {
-    console.log(colors.red("0 Entries Found"))
+    console.log(chalk.red("0 Entries Found"))
     process.exit(0)
   }
   for (let i = 0; i < lines.length; i ++) { // Loop through array of lines
@@ -173,7 +174,7 @@ function entryErrorCheck() {
       e.licenseTest = testLicense(e.raw);
       if (e.licenseTest === false) {
         e.pass = false;
-        console.log(colors.yellow(`${e.name}'s license is not on License list.`))
+        console.log(chalk.yellow(`${e.name}'s license is not on License list.`))
       }
       if (e.pass) {
         totalPass++
@@ -190,12 +191,12 @@ function entryErrorCheck() {
       if (!findPattern(e.raw)) {
         e.highlight = findError(e.raw);
         e.pass = false;
-        console.log(`${colors.yellow(e.line)} ${e.highlight}`)
+        console.log(`${chalk.yellow(e.line)} ${e.highlight}`)
       }
       e.licenseTest = testLicense(e.raw);
       if (e.licenseTest === false) {
         e.pass = false;
-        console.log(colors.yellow(`${e.line} ${e.name}'s license is not on License list.`))
+        console.log(chalk.yellow(`${e.line} ${e.name}'s license is not on License list.`))
       }
       if (e.pass) {
         totalPass++
@@ -207,16 +208,16 @@ function entryErrorCheck() {
 
 
   if (totalFail > 0) {
-    console.log(colors.blue(`\n-----------------------------\n`))
-    console.log(colors.green("The portion of the entry with an error ") + colors.underline.red("will be underlined and RED") + `\n`)
-    console.log(colors.blue(`\n-----------------------------\n`))
-    console.log(colors.red(`${totalFail} Failed, `) + colors.green(`${totalPass} Passed, `) + colors.blue(`of ${total}`))
-    console.log(colors.blue(`\n-----------------------------\n`))
+    console.log(chalk.blue(`\n-----------------------------\n`))
+    console.log(chalk.green("The portion of the entry with an error ") + chalk.underline.red("will be underlined and RED") + `\n`)
+    console.log(chalk.blue(`\n-----------------------------\n`))
+    console.log(chalk.red(`${totalFail} Failed, `) + chalk.green(`${totalPass} Passed, `) + chalk.blue(`of ${total}`))
+    console.log(chalk.blue(`\n-----------------------------\n`))
     process.exit(1);
   } else {
-    console.log(colors.blue(`\n-----------------------------\n`))
-    console.log(colors.green(`${totalPass} Passed of ${total}`))
-    console.log(colors.blue(`\n-----------------------------\n`))
+    console.log(chalk.blue(`\n-----------------------------\n`))
+    console.log(chalk.green(`${totalPass} Passed of ${total}`))
+    console.log(chalk.blue(`\n-----------------------------\n`))
     process.exit(0)
   }
 

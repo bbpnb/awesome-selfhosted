@@ -8,7 +8,7 @@ cache:
 before_install:
   - rvm install 2.6.2
   - gem install awesome_bot
-  - cd tests && npm install colors && cd ..
+  - cd tests && npm install chalk && cd ..
 
 before_script:
 
