@@ -2,6 +2,8 @@ language: node_js
 
 node_js:
   - "node"
+cache:
+  npm: false
   
 before_install:
   - rvm install 2.6.2
